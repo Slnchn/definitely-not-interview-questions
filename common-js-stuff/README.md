@@ -298,3 +298,14 @@ shooters.forEach((shooter) => shooter());
 Операторами `<`, `>`.
 
 </details>
+
+### 1.12. Что такое "дескрипторы свойств" ?
+
+<details>
+<summary>Ответ</summary>
+
+[Object.defineProperty на MDN](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
+
+[Статья про дескрипторы свойств на learn.javascript.ru](https://learn.javascript.ru/descriptors-getters-setters)
+
+</details>

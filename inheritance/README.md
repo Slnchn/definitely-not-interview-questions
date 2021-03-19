@@ -238,3 +238,83 @@ witcher1.toString(); // тут будет ошибка
 2. При прототипном наследовании все наследуемые свойства внутри прототипа. `delete` не может их достать;
 
 </details>
+
+### 3.7. Как сделать цепочку прототипов своими руками ?
+
+<details>
+<summary>Ответ</summary>
+
+```js
+class Animal {
+  constructor(name) {
+    this.name = name;
+    this.isAlive = true;
+  }
+
+  die() {
+    this.isAlive = false;
+  }
+}
+
+class Cat extends Animal {
+  constructor(name, color) {
+    super(name);
+
+    this.color = color;
+  }
+
+  introduceSelf() {
+    return `Hello, mew name is ${this.name} and color is ${this.color}, rrr...`;
+  }
+}
+
+class CatGirl extends Cat {
+  wiggleEars() {
+    console.log("Wiggles ears but very cute :3");
+  }
+}
+
+const catGirl = new CatGirl("Ruki", "black");
+console.log(catGirl.introduceSelf());
+catGirl.wiggleEars();
+```
+
+```js
+function Animal(name) {
+  this.name = name;
+  this.isAlive = true;
+}
+
+Animal.prototype.die = function () {
+  this.isAlive = false;
+};
+
+function Cat(name, color) {
+  const self = Animal.call(this, name) || this;
+  self.color = color;
+  return self;
+}
+
+Cat.prototype = Object.create(Animal.prototype);
+Cat.prototype.constructor = Cat;
+Cat.prototype.introduceSelf = function () {
+  return `Hello, meow name is ${this.name} and color is ${this.color}, rrr...`;
+};
+
+function CatGirl(name, color) {
+  const self = Cat.call(this, name, color) || this;
+  return self;
+}
+
+CatGirl.prototype = Object.create(Cat.prototype);
+CatGirl.prototype.constructor = CatGirl;
+CatGirl.prototype.wiggleEars = function () {
+  console.log("Wiggles ears but very cute :3");
+};
+
+const catGirl = new CatGirl("Ruki", "black");
+console.log(catGirl.introduceSelf());
+catGirl.wiggleEars();
+```
+
+</details>
